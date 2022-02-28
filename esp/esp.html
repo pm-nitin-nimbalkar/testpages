@@ -1,14 +1,9 @@
-
-
-
 <html>
-
     <head>
         <link rel="icon" type="image/png" href="/favicon.png">
         <script async src="//www.googletagservices.com/tag/js/gpt.js"></script>
         <script async src="prebid.js"></script>
 
-        
         <script>
             var div_1_sizes = [
                 [300, 250],
@@ -40,7 +35,6 @@
                             publisherId: '5890',
                             adSlot: '/43743431/DMDemo@728x90:0',
                             pmzoneid: 'zone1',
-                            kadpageurl: 'www.yahoo.com',
                             lat: '40.712775',
                             lon: '-74.005973',
                             yob: '1982',
@@ -85,7 +79,14 @@
                                 expires: 90,             // storage lasts for 90 days
                                 refreshInSeconds: 8 * 3600 // refresh ID every 8 hours to ensure it's fresh
                             }
-                        }, {
+                        },{
+                            name: "sharedId",
+                            storage: {
+                                type: "cookie",
+                                name: `_pubcid`,         // create a cookie with this name
+                                expires: 365             // expires in 1 years
+                            }
+                        },{
                             name: "criteo",
                         },{
                             name: "pubCommonId",
@@ -94,13 +95,19 @@
                                 name: "_pubcid",         // create a cookie with this name
                                 expires: 365             // expires in 1 years
                             }
-                        },],
-                        auctionDelay: 3000
+                        },{
+                            name: 'hadronId',
+                            storage: {
+                                name: 'hadronId',
+                                type: 'html5'
+                            }
+                        }],
+                        auctionDelay: 10000
                     }
                 });
                 pbjs.requestBids({
                     bidsBackHandler: initAdserver,
-                   timeout: PREBID_TIMEOUT
+                    timeout: PREBID_TIMEOUT
                 });
             });
 
@@ -114,26 +121,23 @@
                     pbjs.que.push(function() {
                         pbjs.setTargetingForGPTAsync();
                         googletag.encryptedSignalProviders= [];
-                        var signalSources=["id5-sync.com", "pubcid.org", "criteo.com"];
-                        // var signalSources= ["sharedid.org", "zeotap.com",
-                        //             "intentiq.com", 
-                        //             "criteo.com",
-                        //             "parrable.com", 
-                        //             "neustar.biz",
-                        //             "adserver.org", "merkleinc.com", 
-                        //             "quantcast.com", "id5-sync.com", 
-                        //             "pubcid.org", "britepool.com", 
-                        //             "liveramp.com", 
-                        //             "liveintent.com", 
-                        //             "crwdcntrl.net", 
-                        //             "audigent.com",  
-                        //             "uidapi.com"]
-
-                        var encrypt=false;
-                        pbjs.registerSignalSources(googletag,signalSources,encrypt);
-                        //Register custom signals
-                        var customSignalSources=["pubmatic.com","mysegments.com"];
-                        pbjs.registerSignalSources(googletag,customSignalSources,encrypt,getCustomSignal);
+                        // Timeout added for now to get eids from all the partners before registering the signal
+                        setTimeout(function(){
+                            var signalSources =  [  
+                                "sharedid.org", 
+                                "criteo.com",
+                                "id5-sync.com", 
+                                "pubcid.org", 
+                                "audigent.com"
+                            ];
+                            var encrypt = false;
+                            //Register signal sources
+                            pbjs.registerSignalSources(googletag, signalSources, encrypt);
+                            //Register custom signals
+                            var customSignalSources = ["pubmatic.com", "mysegments.com"];
+                            pbjs.registerSignalSources(googletag, customSignalSources, encrypt, getCustomSignal);
+                            //googletag.pubads().refresh();
+                        },3000)
                         googletag.pubads().refresh();
                     });
                 });
