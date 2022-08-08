@@ -1,0 +1,298 @@
+<!--
+
+  This page calls a single bidder for a single ad slot. It can be considered a "hello world" example for using
+  Prebid with the Google Publisher Tag.
+
+  It also makes a good test page for new adapter PR submissions. Simply set your server's Bid Params object in the
+  bids array inside the adUnits, and it will use your adapter to load an ad.
+
+  NOTE that many ad servers won't send back an ad if the URL is localhost... so you might need to
+  set an alias in your /etc/hosts file so that you can load this page from a different domain.
+
+-->
+<!DOCTYPE HTML> 
+<html lang="en-us">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0&appId=1592287871148119&autoLogAppEvents=1" nonce="NPNzjk3X"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="883497606228-c9i8iiubg6e790la0bkhcid96kqja65r.apps.googleusercontent.com">
+<meta http-equiv="origin-trial" content="A7rr53EEmoKCTWxaB76E1NWx3+b0kbbERfNfRD9dqdvVuIu8+k+h2MD3PefrP0yYUnUJ/XZI8Oh/Rn50rqhldQsAAABseyJvcmlnaW4iOiJodHRwOi8vMTI3LjAuMC4xOjU1MDAiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjYxMjk5MTk5LCJpc1RoaXJkUGFydHkiOnRydWV9">
+
+      <script>
+        var PREBID_TIMEOUT = 2700;
+  
+        var adUnits = [
+            {
+                code: 'Div1',
+                mediaTypes: {
+                        banner: {
+                            sizes: [[300, 250],[728, 90],[160,600]]                            
+                        }
+                    },
+                bids: [                   
+                    {
+                        bidder: 'pubmatic',
+                        params: {
+                            publisherId: '5890',
+                            adSlot: '/43743431/DMDemo@728x90:0',
+                            pmzoneid: 'zone1',
+                            kadpageurl:'www.yahoo.com',
+                            lat: '40.712775',
+                            lon: '-74.005973',
+                            yob: '1982',
+                            kadpageurl: 'www.yahoo.com',                            
+                            gender: 'M',
+                            kadfloor:'1.75',
+                            bcat: ['IAB1-1', 'IAB1-2']  
+                        }
+                    }               
+            ]
+            }
+        ];
+
+        
+        var pbjs = pbjs || {};
+        pbjs.que = pbjs.que || [];
+      </script>
+<script>
+
+  var userEmail = "";
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     //js.async = true;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '1592287871148119',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v13.0',
+        status     : true
+      });
+    };
+</script>
+
+
+<!-- <script>
+
+(function() {
+    window.checkSSOLoginStatus = function(userData) {
+        window.IHPWT.loginEvent = true;
+        if (typeof userData === 'object') {
+            ihowpbjs && ihowpbjs.onSSOLogin({
+                'provider': 'google',
+                'googleUserObject': userData
+            });
+        } else {
+            ihowpbjs && ihowpbjs.onSSOLogin({
+                'provider': 'facebook'
+            });
+        }
+    }
+})();
+</script> -->
+
+<script type="text/javascript">
+(function() {
+	var purl = window.location.href;
+	var url = '//ads.pubmatic.com/AdServer/js/pwt/5890';
+	var profileId = '';
+	var profileVersionId = '';
+	if(purl.indexOf('profileid=')>0){
+		var regexp = /profileid=(.*?)(&|$)/g;
+		var matches = regexp.exec(purl);
+		if(matches.length >= 2 && matches[1].length > 0){
+			profileId = '/'+matches[1];
+		}
+	}
+	if(purl.indexOf('pwtv=')>0){
+		var regexp = /pwtv=(.*?)(&|$)/g;
+		var matches = regexp.exec(purl);
+		if(matches.length >= 2 && matches[1].length > 0){
+			profileVersionId = '/'+matches[1];
+		}
+	}
+	var wtads = document.createElement('script');
+	wtads.async = true;
+	wtads.type = 'text/javascript';
+	wtads.src = 'ih_profile_email_detect.js';
+	var node = document.getElementsByTagName('script')[0];
+	node.parentNode.insertBefore(wtads, node);
+})();
+
+  </script>
+    <script type='text/javascript'>	
+      (function() {
+        setTimeout(function(){
+          var prebidjs = document.createElement('script');
+          prebidjs.async = true;
+          prebidjs.type = 'text/javascript';
+          var useSSL = 'https:' == document.location.protocol;
+          prebidjs.src = "prebid.js";
+          var node = document.getElementsByTagName('script')[0];
+          node.parentNode.insertBefore(prebidjs, node);
+      }, 750);
+    })();
+    </script>
+      <script>
+        var IHPWT = {};
+        
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+        googletag.cmd.push(function() {
+          googletag.pubads().disableInitialLoad();
+        });
+
+        pbjs.que.push(function() {
+          pbjs.setConfig({ 
+            debug: true,
+            userSync: {
+              filterSettings: {iframe: { bidders: '*', filter:'include'}},
+              enabledBidders: ['pubmatic'],
+              syncDelay: 3000,
+              auctionDelay: 1.1
+          }});
+
+
+          pbjs.addAdUnits(adUnits);
+          setTimeout(function(){  
+              pbjs.requestBids({
+                  bidsBackHandler: sendAdserverRequest,
+                  timeout: PREBID_TIMEOUT
+              });
+          }, 0); 
+          
+          setTimeout(function(){  
+              pbjs.requestBids({
+                  bidsBackHandler: sendAdserverRequest,
+                  timeout: PREBID_TIMEOUT
+              });
+          }, 2000); 
+
+        });
+          
+        function sendAdserverRequest() {
+          if (pbjs.adserverRequestSent) return;
+          pbjs.adserverRequestSent = true;
+          googletag.cmd.push(function() {
+            pbjs.que.push(function() {
+              pbjs.setTargetingForGPTAsync();
+              googletag.pubads().refresh();
+            });
+          });
+        }
+  
+        setTimeout(function() {
+          sendAdserverRequest();
+        }, PREBID_TIMEOUT);
+                  
+      </script>
+  
+  <script type='text/javascript'>   
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function() {
+      setTimeout(function(){
+        var gads = document.createElement('script');
+        gads.async = true;
+        gads.type = 'text/javascript';
+        var useSSL = 'https:' == document.location.protocol;
+        gads.src = (useSSL ? 'https:' : 'http:') +
+        '//www.googletagservices.com/tag/js/gpt.js';
+        var node = document.getElementsByTagName('script')[0];
+        node.parentNode.insertBefore(gads, node);
+    }, 300); // Adding 250ms delay to gpt.js for PubMatic script to load
+  })();
+  </script>
+  
+  <script>
+    googletag.cmd.push(function () {
+     googletag.defineSlot('/43743431/DMDemo', [[300, 250],[728, 90],[160, 600]], 'Div1').addService(googletag.pubads());
+     googletag.pubads().setTargeting('safeframeautomation','1');
+      googletag.pubads().enableSingleRequest();
+      googletag.enableServices();
+    });
+  </script>
+    <script> 
+      function signOut() {
+        onLoad();
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+        console.log('User signed out.');
+        if(auth2.isSignedIn)
+        {
+            auth2.isSignedIn.set(false);
+        }
+        });
+
+        owpjs.onSSOLogout()
+      }
+      function onLoad() {
+          gapi.load('auth2', function() {
+            gapi.auth2.init();
+          });
+      }
+
+      function testme() {
+        console.log("User has been logged out of FB");
+      }
+    /*   const button = document.getElementById('signout_button');
+      button.onclick = () => {
+        google.accounts.id.disableAutoSelect();
+      } */
+      </script>
+
+  </head>
+  
+  <body>
+  <h2>Prebid.js Test</h2>
+  <h5>Div-1</h5>
+  <div id='Div1'>
+      <script type='text/javascript'>
+        googletag.cmd.push(function() { 
+            googletag.display('Div1'); });
+      </script>
+  </div>
+
+  <script>
+    function fbLogout() {
+          if (FB.getAccessToken() !== null ) {
+            console.log(FB.getAccessToken());
+            FB.logout(function (response) {
+                //Do what ever you want here when logged out like reloading the page
+                console.log("sso -  user logged out from FB");
+                console.log(response);
+            });
+          }
+        }
+    </script>
+    
+    <h2 style='text-align:center;'>
+      NON SRA - Slot Refresh
+    </h2>
+    <fb:login-button auto_logout_link="true" scope="public_profile,email" onlogin="checkSSOLoginStatus()">
+    </fb:login-button>
+    <input type="email" value="dummy_email@liveramp.com">
+  <button type="button">Click Event</button>
+    <hr />
+    <div class="g-signin2" data-onsuccess="checkSSOLoginStatus"></div>
+    <a href="#" onclick="signOut();">Sign out</a>
+    <script>
+        function signOut() {
+          var auth2 = gapi.auth2.getAuthInstance();
+          auth2.signOut().then(function () {
+            console.log('User signed out.');
+          });
+        }
+      </script>
+  </body>
+  </html> 
+
