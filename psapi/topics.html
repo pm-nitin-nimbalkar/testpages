@@ -1,0 +1,27 @@
+<!--
+   This page calls a single bidder for a single ad slot. It can be considered a "hello world" example for using
+   Prebid with the Google Publisher Tag.
+   
+   It also makes a good test page for new adapter PR submissions. Simply set your server's Bid Params object in the
+   bids array inside the adUnits, and it will use your adapter to load an ad.
+   
+   NOTE that many ad servers won't send back an ad if the URL is localhost... so you might need to
+   set an alias in your /etc/hosts file so that you can load this page from a different domain.
+   
+   -->
+   <!DOCTYPE HTML> 
+   <html lang="en-us">
+      <head>
+         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+         <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+         <meta http-equiv="origin-trial" content="AlxRKnZHMajKielCq/8G7UBvt09jM79bpbB5EYtvcTrphdo1ae7J1YmadY8hrOSrjLS4ATQhdudTdaapVY7O7w8AAABieyJvcmlnaW4iOiJodHRwczovL25pdGluMDYxMC5naXRodWIuaW86NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY4ODA4MzE5OX0=">
+        </head>
+        <body>
+          Nitin
+          <script>
+            'browsingTopics' in document && document.featurePolicy.allowsFeature('browsing-topics') ?
+              console.log('document.browsingTopics() is supported on this page') :
+              console.log('document.browsingTopics() is not supported on this page');
+          </script>
+        </body>
+   </html>
