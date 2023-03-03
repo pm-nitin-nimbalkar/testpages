@@ -1,27 +1,22 @@
-<!--
-   This page calls a single bidder for a single ad slot. It can be considered a "hello world" example for using
-   Prebid with the Google Publisher Tag.
-   
-   It also makes a good test page for new adapter PR submissions. Simply set your server's Bid Params object in the
-   bids array inside the adUnits, and it will use your adapter to load an ad.
-   
-   NOTE that many ad servers won't send back an ad if the URL is localhost... so you might need to
-   set an alias in your /etc/hosts file so that you can load this page from a different domain.
-   
-   -->
-   <!DOCTYPE HTML> 
-   <html lang="en-us">
-      <head>
-         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-         <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
-         <meta http-equiv="origin-trial" content="AvuDSAAccy2nFjafTUSg7FMo8XR0P7Iy5X8MSnvjo/0ltvYpmuXWrbkPS01jRMvzqroPAj2+ySA9hTY4O7CdSQoAAAByeyJvcmlnaW4iOiJodHRwczovL3ZvbHVibGUtZmVuZ2xpc3UtZDEzMzY3Lm5ldGxpZnkuYXBwOjQ0MyIsImZlYXR1cmUiOiJQcml2YWN5U2FuZGJveEFkc0FQSXMiLCJleHBpcnkiOjE2ODgwODMxOTl9">
-        </head>
-        <body>
-          Nitin
-          <script>
-            'browsingTopics' in document && document.featurePolicy.allowsFeature('browsing-topics') ?
-              console.log('document.browsingTopics() is supported on this page') :
-              console.log('document.browsingTopics() is not supported on this page');
-          </script>
-        </body>
-   </html>
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
+    <meta
+      http-equiv="origin-trial"
+      content="AvuDSAAccy2nFjafTUSg7FMo8XR0P7Iy5X8MSnvjo/0ltvYpmuXWrbkPS01jRMvzqroPAj2+ySA9hTY4O7CdSQoAAAByeyJvcmlnaW4iOiJodHRwczovL3ZvbHVibGUtZmVuZ2xpc3UtZDEzMzY3Lm5ldGxpZnkuYXBwOjQ0MyIsImZlYXR1cmUiOiJQcml2YWN5U2FuZGJveEFkc0FQSXMiLCJleHBpcnkiOjE2ODgwODMxOTl9"
+    />
+  </head>
+  <body>
+    <h1 id="demo">TOPICS API</h1>
+
+    <script>
+      document.getElementById("demo").innerHTML =
+        "browsingTopics" in document &&
+        document.featurePolicy.allowsFeature("browsing-topics")
+          ? "TOPICS API( document.browsingTopics() ) is supported on this page"
+          : "TOPICS API( document.browsingTopics() ) is not supported on this page";
+    </script>
+  </body>
+</html>
