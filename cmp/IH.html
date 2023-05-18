@@ -274,7 +274,8 @@
       // } else {
       //   wtads.src = 'owt.'+profile+"."+project+".js";
       // }
-      wtads.src = 'https://ads.pubmatic.com/AdServer/js/pwt/5890/10106/5/pwt.js';
+      //wtads.src = 'https://ads.pubmatic.com/AdServer/js/pwt/5890/10106/5/pwt.js';
+      wtads.src= url + profileId + profileVersionId + '/pwt.js';
       var node = document.getElementsByTagName('script')[0];
       node.parentNode.insertBefore(wtads, node);
     })();
