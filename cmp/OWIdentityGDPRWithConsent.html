@@ -1,0 +1,324 @@
+
+<!DOCTYPE HTML> 
+
+<html lang="en-us">
+<head>
+<!-- <script type="text/javascript" src="TCF2_CMP_true_latest.js"></script> -->
+
+<!-- Quantcast Choice. Consent Manager Tag v2.0 (for TCF 2.0) -->
+<script type="text/javascript" async=true>
+    (function () {
+      var host = window.location.hostname;
+      var element = document.createElement('script');
+      var firstScript = document.getElementsByTagName('script')[0];
+      var url = 'https://cmp.quantcast.com'
+        .concat('/choice/', '-ZrbJAFH6aumB', '/', host, '/choice.js?tag_version=V2');
+      var uspTries = 0;
+      var uspTriesLimit = 3;
+      element.async = true;
+      element.type = 'text/javascript';
+      element.src = url;
+
+      firstScript.parentNode.insertBefore(element, firstScript);
+
+      function makeStub() {
+        var TCF_LOCATOR_NAME = '__tcfapiLocator';
+        var queue = [];
+        var win = window;
+        var cmpFrame;
+
+        function addFrame() {
+          var doc = win.document;
+          var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
+
+          if (!otherCMP) {
+            if (doc.body) {
+              var iframe = doc.createElement('iframe');
+
+              iframe.style.cssText = 'display:none';
+              iframe.name = TCF_LOCATOR_NAME;
+              doc.body.appendChild(iframe);
+            } else {
+              setTimeout(addFrame, 5);
+            }
+          }
+          return !otherCMP;
+        }
+
+        function tcfAPIHandler() {
+          var gdprApplies;
+          var args = arguments;
+
+          if (!args.length) {
+            return queue;
+          } else if (args[0] === 'setGdprApplies') {
+            if (
+              args.length > 3 &&
+              args[2] === 2 &&
+              typeof args[3] === 'boolean'
+            ) {
+              gdprApplies = args[3];
+              if (typeof args[2] === 'function') {
+                args[2]('set', true);
+              }
+            }
+          } else if (args[0] === 'ping') {
+            var retr = {
+              gdprApplies: gdprApplies,
+              cmpLoaded: false,
+              cmpStatus: 'stub'
+            };
+
+            if (typeof args[2] === 'function') {
+              args[2](retr);
+            }
+          } else {
+            if (args[0] === 'init' && typeof args[3] === 'object') {
+              args[3] = Object.assign(args[3], { tag_version: 'V2' });
+            }
+            queue.push(args);
+          }
+        }
+
+        function postMessageEventHandler(event) {
+          var msgIsString = typeof event.data === 'string';
+          var json = {};
+
+          try {
+            if (msgIsString) {
+              json = JSON.parse(event.data);
+            } else {
+              json = event.data;
+            }
+          } catch (ignore) { }
+
+          var payload = json.__tcfapiCall;
+
+          if (payload) {
+            window.__tcfapi(
+              payload.command,
+              payload.version,
+              function (retValue, success) {
+                var returnMsg = {
+                  __tcfapiReturn: {
+                    returnValue: retValue,
+                    success: success,
+                    callId: payload.callId
+                  }
+                };
+                if (msgIsString) {
+                  returnMsg = JSON.stringify(returnMsg);
+                }
+                if (event && event.source && event.source.postMessage) {
+                  event.source.postMessage(returnMsg, '*');
+                }
+              },
+              payload.parameter
+            );
+          }
+        }
+
+        while (win) {
+          try {
+            if (win.frames[TCF_LOCATOR_NAME]) {
+              cmpFrame = win;
+              break;
+            }
+          } catch (ignore) { }
+
+          if (win === window.top) {
+            break;
+          }
+          win = win.parent;
+        }
+        if (!cmpFrame) {
+          addFrame();
+          win.__tcfapi = tcfAPIHandler;
+          win.addEventListener('message', postMessageEventHandler, false);
+        }
+      };
+
+      makeStub();
+
+      var uspStubFunction = function () {
+        var arg = arguments;
+        if (typeof window.__uspapi !== uspStubFunction) {
+          setTimeout(function () {
+            if (typeof window.__uspapi !== 'undefined') {
+              window.__uspapi.apply(window.__uspapi, arg);
+            }
+          }, 500);
+        }
+      };
+
+      var checkIfUspIsReady = function () {
+        uspTries++;
+        if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
+          console.warn('USP is not accessible');
+        } else {
+          clearInterval(uspInterval);
+        }
+      };
+
+      if (typeof window.__uspapi === 'undefined') {
+        window.__uspapi = uspStubFunction;
+        var uspInterval = setInterval(checkIfUspIsReady, 6000);
+      }
+    })();
+  </script>
+  <!-- End Quantcast Choice. Consent Manager Tag v2.0 (for TCF 2.0) -->
+
+
+
+<meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
+<title>NON SRA</title>
+
+		<!-- Loading Asynchronously -->
+<script type="text/javascript">
+Array.$constructor = function() {
+    for (i = 0; i < this.length; i++) {
+        this[i] = this[i].toUpperCase();
+    }
+};
+</script>
+
+		<script type="text/javascript">
+	(function() {
+    window.PWT = window.PWT || {
+    };
+    if (window.PWT && !window.PWT.HookForPrebidSetConfig) {
+        window.PWT.HookForPrebidSetConfig = function() {
+            owpbjs && owpbjs.setUserIdentities({
+                pubProvidedEmailHash: {
+                    'SHA256': 'fcbb332d8e34a015947614fcf92ff06c92323d9fe78ffbb67f48fdfd13ac1dde'
+                }
+            });
+        }
+    }
+}
+)();
+
+</script>
+<script type="text/javascript">
+(function() {
+	var purl = window.location.href;
+	var url = '//ads.pubmatic.com/AdServer/js/pwt/5890';
+	var profileId = '';
+	var profileVersionId = '';
+	if(purl.indexOf('profileid=')>0){
+		var regexp = /profileid=(.*?)(&|$)/g;
+		var matches = regexp.exec(purl);
+		if(matches.length >= 2 && matches[1].length > 0){
+			profileId = '/'+matches[1];
+		}
+	}
+	if(purl.indexOf('pwtv=')>0){
+		var regexp = /pwtv=(.*?)(&|$)/g;
+		var matches = regexp.exec(purl);
+		if(matches.length >= 2 && matches[1].length > 0){
+			profileVersionId = '/'+matches[1];
+		}
+	}
+	var wtads = document.createElement('script');
+	wtads.async = true;
+	wtads.type = 'text/javascript';
+	//wtads.src = 'https://ads.pubmatic.com/AdServer/js/pwt/5890/10240/1/pwt.js';
+	wtads.src = "owt.ow.actctrl1.js";
+	var node = document.getElementsByTagName('script')[0];
+	node.parentNode.insertBefore(wtads, node);
+})();
+</script>
+		
+		<script type='text/javascript'>	
+			var googletag = googletag || {};
+			googletag.cmd = googletag.cmd || [];
+			(function() {
+				setTimeout(function(){
+					var gads = document.createElement('script');
+					gads.async = true;
+					gads.type = 'text/javascript';
+					var useSSL = 'https:' == document.location.protocol;
+					gads.src = (useSSL ? 'https:' : 'https:') +
+					'//securepubads.g.doubleclick.net/tag/js/gpt.js';
+					var node = document.getElementsByTagName('script')[0];
+					node.parentNode.insertBefore(gads, node);
+			}, 250); // Adding 250ms delay to gpt.js for PubMatic script to load
+		})();
+		</script>
+
+		<script type="text/javascript">
+			googletag.cmd.push(function() {
+				var s1=googletag.defineSlot('/43743431/DMDemo', [728, 90], 'Div1').addService(googletag.pubads());
+				s1.setTargeting('a', [1]);
+				s1.setTargeting('b', [2]);
+				s1.setTargeting('c', 3);
+				s1.setTargeting('d', ['a', 'b', 'c']);				
+				
+
+				var s2=googletag.defineSlot('/43743431/DMDemo1', [[300, 250]], 'Div2').addService(googletag.pubads());
+				s2.setTargeting('aa', [11]);
+				s2.setTargeting('bb', [22]);
+				s2.setTargeting('dd', ['aa', 'bb', 'cc']);				
+				
+								
+				
+				// common targetings
+				googletag.pubads().setTargeting('v','classifieds');
+				googletag.pubads().setTargeting('cpage','browseads');
+				googletag.pubads().setTargeting('article-id','65207');							
+				googletag.pubads().setTargeting('automation','1');							
+				
+				googletag.enableServices();							
+
+				googletag.display('Div1');
+				googletag.display('Div2');
+					
+			});
+			
+		</script>
+	</head>
+	<body style='background-color:whitesmoke;'>
+		
+		<h2 style='text-align:center;'>
+			NON SRA
+		</h2>
+
+<fb:login-button auto_logout_link="true" scope="public_profile,email" onlogin="checkSSOLoginStatus()">
+  </fb:login-button>
+
+  <hr />
+  <div class="g-signin2" data-onsuccess="checkSSOLoginStatus"></div>
+  <a href="#" onclick="signOut();">Sign out</a>
+  <script>
+    function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
+    }
+  </script>
+
+		<br><br>		
+		<!-- DMDemo -->		
+		Adslot : /43743431/DMDemo
+		<br>
+		<div id='Div1'>				
+		</div>
+			
+		<br><br>
+		<!-- DMDemo1 -->
+		Adslot : /43743431/DMDemo1
+		<br>
+		<div id='Div2'>			
+		</div>
+
+		<form onSubmit="javascript:alert('hi'); return false">
+			<input
+			  type="text"
+			  id="first"
+			  name="first"
+			/>
+			<button type="submit">Submit</button>
+		
+	</body>
+</html>
