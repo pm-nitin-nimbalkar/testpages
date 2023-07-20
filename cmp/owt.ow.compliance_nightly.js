@@ -13443,14 +13443,15 @@ function AnalyticsAdapter(_ref) {
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* unused harmony exports coreStorage, default */
-/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
+/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
-/* harmony import */ var _src_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/utils.js */ "./src/utils.js");
-/* harmony import */ var _libraries_analyticsAdapter_AnalyticsAdapter_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../libraries/analyticsAdapter/AnalyticsAdapter.js */ "./libraries/analyticsAdapter/AnalyticsAdapter.js");
-/* harmony import */ var _src_adapterManager_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../src/adapterManager.js */ "./src/adapterManager.js");
-/* harmony import */ var _src_ajax_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../src/ajax.js */ "./src/ajax.js");
+/* harmony import */ var _src_utils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/utils.js */ "./src/utils.js");
+/* harmony import */ var _libraries_analyticsAdapter_AnalyticsAdapter_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../libraries/analyticsAdapter/AnalyticsAdapter.js */ "./libraries/analyticsAdapter/AnalyticsAdapter.js");
+/* harmony import */ var _src_adapterManager_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../src/adapterManager.js */ "./src/adapterManager.js");
+/* harmony import */ var _src_ajax_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../src/ajax.js */ "./src/ajax.js");
 /* harmony import */ var _src_storageManager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/storageManager.js */ "./src/storageManager.js");
-/* harmony import */ var _src_complianceUtils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/complianceUtils.js */ "./src/complianceUtils.js");
+/* harmony import */ var _src_complianceUtils_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../src/complianceUtils.js */ "./src/complianceUtils.js");
+/* harmony import */ var _src_prebidGlobal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/prebidGlobal.js */ "./src/prebidGlobal.js");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -13459,6 +13460,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 // import CONSTANTS from '../src/constants.json';
+
 
 
 
@@ -13522,13 +13524,15 @@ function collectBasicConsentData(args) {
   outputObj['tcS'] = args.consentData.tcString;
   outputObj['gdprA'] = args.consentData.gdprApplies; // whether gdpr applies or not
   outputObj['cc'] = args.consentData.publisherCC; // geo of publisher or site
+  outputObj['im'] = (0,_src_prebidGlobal_js__WEBPACK_IMPORTED_MODULE_2__.getGlobal)().installedModules;
+  outputObj['ts'] = new Date(); //timstamp
 }
 ;
 function collectUserConsentDataAndFireLogger(args) {
   console.log("Compliance logger call - collectUserConsentDataAndFireLogger");
   var URL = "https://ut.pubmatic.com/geo?pubid=" + publisherId;
   outputObj['vc'] = {};
-  (0,_src_utils_js__WEBPACK_IMPORTED_MODULE_2__._each)(_src_complianceUtils_js__WEBPACK_IMPORTED_MODULE_3__.configurationMap, function (obj, key) {
+  (0,_src_utils_js__WEBPACK_IMPORTED_MODULE_3__._each)(_src_complianceUtils_js__WEBPACK_IMPORTED_MODULE_4__.configurationMap, function (obj, key) {
     outputObj['vc'] = _objectSpread(_objectSpread({}, outputObj['vc']), {}, (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])({}, obj.gvlid, args.consentData.vendor.consents[obj.gvlid]));
   });
   outputObj['pc'] = _objectSpread(_objectSpread({}, outputObj['pc']), {}, {
@@ -13558,7 +13562,7 @@ function collectUserConsentDataAndFireLogger(args) {
     }
   };
   try {
-    (0,_src_ajax_js__WEBPACK_IMPORTED_MODULE_4__.ajax)(URL, {
+    (0,_src_ajax_js__WEBPACK_IMPORTED_MODULE_5__.ajax)(URL, {
       success: getRegion,
       error: function error(e) {
         getRegion({
@@ -13576,7 +13580,7 @@ function collectUserConsentDataAndFireLogger(args) {
   }
 }
 function populateDummyData() {
-  if ((0,_src_utils_js__WEBPACK_IMPORTED_MODULE_2__.getParameterByName)('dummy')) {
+  if ((0,_src_utils_js__WEBPACK_IMPORTED_MODULE_3__.getParameterByName)('dummy')) {
     outputObj['vc']['131'] = false; //dummy data to override cmp data
     outputObj['vc']['76'] = false; //dummy data to override cmp data
     outputObj['pc']['1'] = false;
@@ -13592,8 +13596,8 @@ function fireComplianceLoggerCall(args) {
   populateDummyData();
   //outputObj['bb'] = args.biddersBlocked; //list of blocked bidders
   //outputObj['ipb'] = args.storageBlocked; //list of id modules blocked
-  (0,_src_complianceUtils_js__WEBPACK_IMPORTED_MODULE_3__.validateConsentData)(outputObj);
-  (0,_src_ajax_js__WEBPACK_IMPORTED_MODULE_4__.ajax)(pixelURL, null, JSON.stringify(outputObj), {
+  (0,_src_complianceUtils_js__WEBPACK_IMPORTED_MODULE_4__.validateConsentData)(outputObj);
+  (0,_src_ajax_js__WEBPACK_IMPORTED_MODULE_5__.ajax)(pixelURL, null, JSON.stringify(outputObj), {
     contentType: 'application/json',
     withCredentials: true,
     method: 'POST'
@@ -13604,14 +13608,14 @@ function fireComplianceLoggerCall(args) {
 
 /// /////////// ADAPTER DEFINITION //////////////
 
-var baseAdapter = (0,_libraries_analyticsAdapter_AnalyticsAdapter_js__WEBPACK_IMPORTED_MODULE_5__["default"])({
+var baseAdapter = (0,_libraries_analyticsAdapter_AnalyticsAdapter_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
   analyticsType: 'endpoint'
 });
 var complianceAdapter = Object.assign({}, baseAdapter, {
   enableAnalytics: function enableAnalytics() {
     var conf = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var error = false;
-    if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_6__["default"])(conf.options) === 'object') {
+    if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_7__["default"])(conf.options) === 'object') {
       if (conf.options.publisherId) {
         publisherId = Number(conf.options.publisherId);
       }
@@ -13621,15 +13625,15 @@ var complianceAdapter = Object.assign({}, baseAdapter, {
       domain = conf.options.domain || '';
       cmpConfig = conf.options.cmpConfig;
     } else {
-      (0,_src_utils_js__WEBPACK_IMPORTED_MODULE_2__.logError)(LOG_PRE_FIX + 'Config not found.');
+      (0,_src_utils_js__WEBPACK_IMPORTED_MODULE_3__.logError)(LOG_PRE_FIX + 'Config not found.');
       error = true;
     }
     if (!publisherId) {
-      (0,_src_utils_js__WEBPACK_IMPORTED_MODULE_2__.logError)(LOG_PRE_FIX + 'Missing publisherId(Number).');
+      (0,_src_utils_js__WEBPACK_IMPORTED_MODULE_3__.logError)(LOG_PRE_FIX + 'Missing publisherId(Number).');
       error = true;
     }
     if (error) {
-      (0,_src_utils_js__WEBPACK_IMPORTED_MODULE_2__.logError)(LOG_PRE_FIX + 'Not collecting data due to error(s).');
+      (0,_src_utils_js__WEBPACK_IMPORTED_MODULE_3__.logError)(LOG_PRE_FIX + 'Not collecting data due to error(s).');
     } else {
       baseAdapter.enableAnalytics.call(this, conf);
     }
@@ -13646,8 +13650,8 @@ var complianceAdapter = Object.assign({}, baseAdapter, {
       args = _ref.args;
     switch (eventType) {
       case COMPLIANCE_INIT:
-        (0,_src_utils_js__WEBPACK_IMPORTED_MODULE_2__.logInfo)('Compliance Logger fired - ' + COMPLIANCE_INIT);
-        (0,_src_utils_js__WEBPACK_IMPORTED_MODULE_2__.logInfo)(args);
+        (0,_src_utils_js__WEBPACK_IMPORTED_MODULE_3__.logInfo)('Compliance Logger fired - ' + COMPLIANCE_INIT);
+        (0,_src_utils_js__WEBPACK_IMPORTED_MODULE_3__.logInfo)(args);
         if (args.consentData.eventStatus === "tcloaded" || args.consentData.eventStatus === "cmpuishown") {
           collectBasicConsentData(args);
           setTimeout(function () {
@@ -13664,7 +13668,7 @@ var complianceAdapter = Object.assign({}, baseAdapter, {
 
 /// /////////// ADAPTER REGISTRATION //////////////
 
-_src_adapterManager_js__WEBPACK_IMPORTED_MODULE_7__["default"].registerAnalyticsAdapter({
+_src_adapterManager_js__WEBPACK_IMPORTED_MODULE_8__["default"].registerAnalyticsAdapter({
   adapter: complianceAdapter,
   code: ADAPTER_CODE
 });
@@ -13735,7 +13739,10 @@ var COMPLIANCE_MISCONFIGS = {
   5: "Distinct namespaces used for all wrappers on page.",
   6: "Prebid version is v7.39 or higher.",
   7: "Both GDPR and CCPA are not enabled in a single profile."
+  /*8: "GDPR configuration disabled for non-GDPR region.",
+  9: "CCPA configuration disabled for non-CCPA region."*/
 };
+
 function isVersionSmaller(version1, version2) {
   var parseVersion = function parseVersion(version) {
     return version.slice(1).split('.').map(Number);
@@ -13785,6 +13792,8 @@ function validateConsentData(dataObj) {
   }
   var networkEntries = window.performance.getEntries();
   var userSyncUrl = "";
+  var idhViolations = [];
+  var bidderViolations = [];
   var _loop = function _loop(i) {
     if (networkEntries[i].initiatorType === 'xmlhttprequest') {
       ;
@@ -13794,15 +13803,11 @@ function validateConsentData(dataObj) {
           // call for a configured id module/partner is detected
           if (dataObj['vc'][obj.gvlid] === false) {
             if (obj.type === 'idh') {
-              errors['violations'].push({
-                'errorCode': 1,
-                'meta': key
-              });
+              //errors['violations'].push({'errorCode': 1, 'meta': key});
+              idhViolations.push(key);
             } else {
-              errors['violations'].push({
-                'errorCode': 2,
-                'meta': key
-              });
+              //errors['violations'].push({'errorCode': 2, 'meta': key});
+              bidderViolations.push(key);
             }
           } else if (dataObj['pc']['1'] === false) {
             errors['violations'].push({
@@ -13817,7 +13822,10 @@ function validateConsentData(dataObj) {
           }
         }
         if (networkEntries[i].name.indexOf("user_sync.html") >= 0) {
-          errors['violations'].push(3);
+          errors['violations'].push({
+            'errorCode': 3,
+            'meta': ''
+          });
         }
         if (networkEntries[i].name.indexOf("user_sync.html") >= 0) {
           userSyncUrl = networkEntries[i].name;
@@ -13827,6 +13835,18 @@ function validateConsentData(dataObj) {
   };
   for (var i in networkEntries) {
     _loop(i);
+  }
+  if (idhViolations.length > 0) {
+    errors['violations'].push({
+      'errorCode': 1,
+      'meta': idhViolations.join(",")
+    });
+  }
+  if (bidderViolations.length > 0) {
+    errors['violations'].push({
+      'errorCode': 2,
+      'meta': bidderViolations.join(",")
+    });
   }
   if (userSyncUrl.length > 0) {
     if (dataObj['ge'] == true) {
@@ -13844,11 +13864,14 @@ function validateConsentData(dataObj) {
       }
     } else if (dataObj['ce'] == true) {
       if (!getQuerystring(userSyncUrl, 'us_privacy')) {
-        errors['violations'].push(9);
+        errors['violations'].push({
+          'errorCode': 9,
+          'meta': ''
+        });
       }
     }
   }
-  if (dataObj['gto'] < 1000) {
+  if (dataObj['gto'] < 5000) {
     errors['misconfigs'].push({
       'errorCode': 1,
       'meta': dataObj['gto']
@@ -13862,11 +13885,11 @@ function validateConsentData(dataObj) {
   }
   if (dataObj['ge'] === 0 && GDPR_REGIONS.indexOf(dataObj['loc']) >= 0) {
     errors['misconfigs'].push({
-      'errorCode': 2,
+      'errorCode': 3,
       'meta': dataObj['loc']
     });
   }
-  if (dataObj['ce'] === 0 && GDPR_REGIONS.indexOf(dataObj['loc']) < 0) {
+  if (dataObj['ce'] === 0 && dataObj['loc'] === 'US') {
     errors['misconfigs'].push({
       'errorCode': 4,
       'meta': ''
