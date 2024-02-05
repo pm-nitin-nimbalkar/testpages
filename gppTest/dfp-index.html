@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>NON SRA</title>
+    <!-- Loading Asynchronously -->
+    <script type="text/javascript">
+      Array.$constructor = function () {
+        for (i = 0; i < this.length; i++) {
+          this[i] = this[i].toUpperCase();
+        }
+      };
+    </script>
+
+    <script type="text/javascript" src="../../GPP_CMP_true_new.js"></script>
+    
+    <!-- <script>
+      var loadAsyncScript = function(html){
+        var template = document.createElement('template');
+        html = html.trim(); // Never return a text node of whitespace as the result
+        template.innerHTML = html;
+        // var s = document.createElement('script');
+        // s.type = 'text/javascript';
+        // s.async = 1;
+        // s.src = scriptURL; 
+        var h = document.getElementsByTagName('script')[0]; 
+        h.parentNode.insertBefore(template, h); 
+      };
+      loadAsyncScript('<iframe frameborder="0" allowtransparency="true" marginheight="0" marginwidth="0" scrolling="no" width="0" hspace="0" vspace="0" height="0" style="height:0px;width:0px;" src="https://ads.pubmatic.com/AdServer/js/cl_partner.html?pid=2&gdpr=0&gdpr_consent=&rdu=https%3A%2F%2Fsimage4.pubmatic.com%2FAdServer%2FSPug%3Fo%3D3%26u%3D206CD4AC-9E8A-4181-BE8F-51BAD6DAF2B1%26vcode%3Dbz0yJnR5cGU9MSZjb2RlPTM2MiZ0bD00MzIwMA%3D%3D%26piggybackCookie%3Duid%3A%23%23P_UID"></iframe>');
+    </script> -->
+    <script type="text/javascript">
+      window.PWT = window.PWT || {};
+      (function () {
+        var purl = window.location.href;
+        var url = "//ads.pubmatic.com/AdServer/js/pwt/5890/";
+        // To get the ci-va2 staging config
+        // var url = "//10.172.141.11/AdServer/js/pwt/5890/";
+        var profileId = "";
+        var profileVersionId = "";
+        if (purl.indexOf("profileid=") > 0) {
+          var regexp = /profileid=(.*?)(&|$)/g;
+          var matches = regexp.exec(purl);
+          if (matches.length >= 2 && matches[1].length > 0) {
+            profileId = "/" + matches[1];
+          }
+        }
+        if (purl.indexOf("pwtv=") > 0) {
+          var regexp = /pwtv=(.*?)(&|$)/g;
+          var matches = regexp.exec(purl);
+          if (matches.length >= 2 && matches[1].length > 0) {
+            profileVersionId = "/" + matches[1];
+          }
+        }
+        var wtads = document.createElement("script");
+        wtads.async = true;
+        wtads.type = "text/javascript";
+        //wtads.src = url + profileId + profileVersionId + "/pwt.js";
+        wtads.src = "new_owt.js";
+        var node = document.getElementsByTagName("script")[0];
+        node.parentNode.insertBefore(wtads, node);
+      })();
+    </script>
+    <script type="text/javascript">
+      var googletag = googletag || {};
+      googletag.cmd = googletag.cmd || [];
+      (function () {
+        setTimeout(function () {
+          // window.PWT.JSLoaded= function(){
+          var gads = document.createElement("script");
+          gads.async = true;
+          gads.type = "text/javascript";
+          var useSSL = "https:" == document.location.protocol;
+          gads.src = (useSSL ? "https:" : "http:") + "//www.googletagservices.com/tag/js/gpt.js";
+          var node = document.getElementsByTagName("script")[0];
+          node.parentNode.insertBefore(gads, node);
+          // }
+        }, 500); // Adding 250ms delay to gpt.js for PubMatic script to load
+      })();
+    </script>
+    <!-- <script type="text/javascript">
+      window.PWT = window.PWT || {};
+      (function () {
+        var purl = window.location.href;
+        var url = "//ads.pubmatic.com/AdServer/js/pwt/5890/";
+        // To get the ci-va2 staging config
+        // var url = "//10.172.141.11/AdServer/js/pwt/5890/";
+        var profileId = "";
+        var profileVersionId = "";
+        if (purl.indexOf("profileid=") > 0) {
+          var regexp = /profileid=(.*?)(&|$)/g;
+          var matches = regexp.exec(purl);
+          if (matches.length >= 2 && matches[1].length > 0) {
+            profileId = "/" + matches[1];
+          }
+        }
+        if (purl.indexOf("pwtv=") > 0) {
+          var regexp = /pwtv=(.*?)(&|$)/g;
+          var matches = regexp.exec(purl);
+          if (matches.length >= 2 && matches[1].length > 0) {
+            profileVersionId = "/" + matches[1];
+          }
+        }
+        var wtads = document.createElement("script");
+        wtads.async = true;
+        wtads.type = "text/javascript";
+        //wtads.src = url + profileId + profileVersionId + "/pwt.js";
+        wtads.src = "owt.js";
+        var node = document.getElementsByTagName("script")[0];
+        node.parentNode.insertBefore(wtads, node);
+      })();
+    </script> -->
+    <script type="text/javascript">
+      googletag.cmd.push(function () {
+        // var s1=googletag.defineSlot('/43743431/DMDemo', [728, 90], 'Div1').addService(googletag.pubads());
+        var s1 = googletag
+          .defineSlot(
+            "/43743431/DMDemo2",
+            [
+              [728, 90],
+              // [300, 250],
+            ],
+            "Div1"
+          )
+          .addService(googletag.pubads());
+        // var s1=googletag.defineSlot('/43743431/DMDemo', [[300, 250],[728, 90]], 'Div1').addService(googletag.pubads());
+        s1.setTargeting("a", [1]);
+        s1.setTargeting("b", [2]);
+        s1.setTargeting("c", 3);
+        s1.setTargeting("d", ["a", "b", "c"]);
+        googletag.pubads().setTargeting("v", "classifieds");
+        googletag.pubads().setTargeting("cpage", "browseads");
+        googletag.pubads().setTargeting("article-id", "65207");
+        googletag.pubads().setTargeting("automation", "1");
+        //googletag.pubads().setTargeting("nitin_ns", "999");
+        // googletag.pubads().enableSingleRequest(); //SRA test case
+        googletag.enableServices();
+
+        var s2 = googletag
+          .defineSlot("/43743431/DMDemo1", [728, 90], "Div2")
+          .addService(googletag.pubads());
+        s2.setTargeting("aa", [1]);
+        s2.setTargeting("bb", [2]);
+        s2.setTargeting("cc", 3);
+        s2.setTargeting("dd", ["aa", "bb", "cc"]);
+        googletag.pubads().setTargeting("v", "classifieds");
+        googletag.pubads().setTargeting("cpage", "browseads");
+        googletag.pubads().setTargeting("article-id", "65207");
+        googletag.pubads().setTargeting("automation", "1");
+        // googletag.pubads().enableSingleRequest(); //SRA test case
+        googletag.enableServices();
+      });
+    </script>
+  </head>
+  <body style="background-color: whitesmoke">
+    <h2 style="text-align: center">SRA</h2>
+    <br /><br />
+    <!-- DMDemo -->
+    Adslot : /43743431/DMDemo2
+    <br />
+    <div id="Div1">
+      <script>
+        googletag.cmd.push(function () {
+          googletag.display("Div1");
+        });
+      </script>
+    </div>
+    <br /><br />
+    Adslot : /43743431/DMDemo
+    <div id="Div2">
+      <script>
+        googletag.cmd.push(function () {
+          googletag.display("Div2");
+        });
+      </script>
+    </div>
+  </body>
+</html>
